@@ -1,0 +1,72 @@
+import { createServerClient } from "@supabase/ssr";
+import { type NextRequest, NextResponse } from "next/server";
+
+async function getUserAndRefreshSession(request: NextRequest) {
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: any) {
+          request.cookies.set({ name, value, ...options });
+          response = NextResponse.next({
+            request: { headers: request.headers },
+          });
+          response.cookies.set({ name, value, ...options });
+        },
+        remove(name: string, options: any) {
+          request.cookies.set({ name, value: "", ...options });
+          response = NextResponse.next({
+            request: { headers: request.headers },
+          });
+          response.cookies.set({ name, value: "", ...options });
+        },
+      },
+    }
+  );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return { response, user };
+}
+
+export async function middleware(request: NextRequest) {
+  const { response, user } = await getUserAndRefreshSession(request);
+  const { pathname } = request.nextUrl;
+
+  const isDashboardRoute = pathname.startsWith("/dashboard");
+  const isLoginRoute = pathname === "/login";
+  const isAuthRoute = pathname.startsWith("/auth");
+  const isSignupRoute = pathname === "/auth/signup";
+
+  // Unauthenticated users trying to access protected routes
+  // Note: /auth/signup remains public so new users can register
+  if (!user && (isDashboardRoute || (isAuthRoute && !isSignupRoute))) {
+    const url = new URL("/login", request.url);
+    return NextResponse.redirect(url);
+  }
+
+  // Authenticated users should not see the login page
+  if (user && isLoginRoute) {
+    const url = new URL("/dashboard", request.url);
+    return NextResponse.redirect(url);
+  }
+
+  return response;
+}
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/login", "/auth/:path*"],
+};
+
