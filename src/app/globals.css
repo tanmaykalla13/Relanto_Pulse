@@ -1,4 +1,15 @@
 @import "tailwindcss";
+@import "react-day-picker/style.css";
 
 /* Global base styles are driven by Tailwind classes on <body> */
+
+/* Dark theme for react-day-picker Calendar */
+.rdp-root {
+  --rdp-accent-color: rgb(14 165 233); /* sky-500 */
+  --rdp-accent-background-color: rgb(14 165 233 / 0.2);
+  --rdp-day_button-border-radius: 0.5rem;
+}
+.rdp-root .rdp-day_button:hover {
+  background-color: rgb(51 65 85); /* slate-700 */
+}
 
