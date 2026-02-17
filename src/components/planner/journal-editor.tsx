@@ -1,9 +1,20 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { saveJournal } from "@/lib/actions/planner";
+
+const DELIMITER = "\n";
+
+function contentToLines(content: string): string[] {
+  if (content.trim() === "") return [""];
+  return content.split(/\r?\n/);
+}
+
+function linesToContent(lines: string[]): string {
+  return lines.join(DELIMITER);
+}
 
 interface JournalEditorProps {
   dateStr: string;
@@ -12,15 +23,61 @@ interface JournalEditorProps {
 
 export function JournalEditor({ dateStr, initialContent }: JournalEditorProps) {
   const router = useRouter();
-  const [content, setContent] = useState(initialContent);
+  const [lines, setLines] = useState<string[]>(() =>
+    contentToLines(initialContent)
+  );
   const [isSaving, setIsSaving] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleSave = useCallback(async () => {
     setIsSaving(true);
-    await saveJournal(dateStr, content);
+    await saveJournal(dateStr, linesToContent(lines));
     setIsSaving(false);
     router.refresh();
-  }, [dateStr, content, router]);
+  }, [dateStr, lines, router]);
+
+  const setLine = useCallback((index: number, value: string) => {
+    setLines((prev) => {
+      const next = [...prev];
+      next[index] = value;
+      return next;
+    });
+  }, []);
+
+  const insertLineAfter = useCallback((index: number) => {
+    setLines((prev) => {
+      const next = [...prev];
+      next.splice(index + 1, 0, "");
+      return next;
+    });
+    setTimeout(() => {
+      inputRefs.current[index + 1]?.focus();
+    }, 0);
+  }, []);
+
+  const removeLine = useCallback((index: number) => {
+    if (lines.length <= 1) return;
+    setLines((prev) => prev.filter((_, i) => i !== index));
+    setTimeout(() => {
+      const prevIndex = Math.max(0, index - 1);
+      inputRefs.current[prevIndex]?.focus();
+    }, 0);
+  }, [lines.length]);
+
+  const handleKeyDown = useCallback(
+    (index: number) => (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        insertLineAfter(index);
+        return;
+      }
+      if (e.key === "Backspace" && lines[index] === "") {
+        e.preventDefault();
+        removeLine(index);
+      }
+    },
+    [insertLineAfter, removeLine, lines]
+  );
 
   return (
     <div className="space-y-2">
@@ -36,14 +93,37 @@ export function JournalEditor({ dateStr, initialContent }: JournalEditorProps) {
           {isSaving ? "Saving..." : "Save"}
         </button>
       </div>
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        onBlur={handleSave}
-        placeholder="Write your reflections for today..."
-        rows={8}
-        className="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-sky-500"
-      />
+      <div
+        className="min-h-[8rem] rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          if (target.tagName !== "INPUT" && lines.length === 1 && lines[0] === "") {
+            inputRefs.current[0]?.focus();
+          }
+        }}
+      >
+        <ul className="list-none space-y-1">
+          {lines.map((line, index) => (
+            <li key={index} className="flex items-center gap-2">
+              <span className="text-slate-500 select-none" aria-hidden>
+                •
+              </span>
+              <input
+                ref={(el) => {
+                  inputRefs.current[index] = el;
+                }}
+                type="text"
+                value={line}
+                onChange={(e) => setLine(index, e.target.value)}
+                onKeyDown={handleKeyDown(index)}
+                onBlur={handleSave}
+                placeholder={index === 0 ? "Write a reflection..." : ""}
+                className="flex-1 min-w-0 bg-transparent py-0.5 text-sm text-slate-100 placeholder-slate-500 outline-none"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

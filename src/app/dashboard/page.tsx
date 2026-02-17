@@ -68,20 +68,30 @@ export default async function DashboardPage() {
               Action Required
             </h2>
             <div className="mt-4">
-              {stats.backlogCount === 0 ? (
+              {stats.overdueDates.length === 0 ? (
                 <div className="rounded-xl bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
                   You are all caught up! 🚀
                 </div>
               ) : (
                 <div className="rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-400">
-                  You have {stats.backlogCount} pending goals. Catch up in{" "}
-                  <Link
-                    href="/dashboard/planner"
-                    className="font-medium underline underline-offset-2 hover:text-amber-300"
-                  >
-                    Planner
-                  </Link>
-                  !
+                  <span className="block mb-2">
+                    You have pending goals on:
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {stats.overdueDates.map((dateStr) => {
+                      const d = new Date(dateStr + "T12:00:00");
+                      const label = format(d, "MMM d");
+                      return (
+                        <Link
+                          key={dateStr}
+                          href={`/dashboard/planner?date=${dateStr}`}
+                          className="inline-flex items-center rounded-lg bg-amber-500/20 px-3 py-1.5 text-xs font-medium text-amber-200 hover:bg-amber-500/30 hover:text-amber-100"
+                        >
+                          {label}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>

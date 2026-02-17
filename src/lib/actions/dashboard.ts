@@ -21,7 +21,8 @@ export interface DashboardStats {
   progressPercent: number;
   currentDay: number;
   totalDays: number;
-  backlogCount: number;
+  /** Distinct dates (YYYY-MM-DD) with pending/in_progress goals before today */
+  overdueDates: string[];
   profile: {
     full_name: string | null;
     email: string;
@@ -58,12 +59,16 @@ export async function getDashboardStats(): Promise<DashboardStats | null> {
 
   const todayStr = format(today, "yyyy-MM-dd");
 
-  const { count: backlogCount } = await supabase
+  const { data: backlogRows } = await supabase
     .from("goals")
-    .select("*", { count: "exact", head: true })
+    .select("target_date")
     .eq("user_id", user.id)
     .lt("target_date", todayStr)
     .neq("status", "completed");
+
+  const overdueDates = Array.from(
+    new Set((backlogRows ?? []).map((r) => r.target_date as string))
+  ).sort();
 
   const { data: profileRow } = await supabase
     .from("profiles")
@@ -81,7 +86,7 @@ export async function getDashboardStats(): Promise<DashboardStats | null> {
     progressPercent,
     currentDay: elapsedDays,
     totalDays,
-    backlogCount: backlogCount ?? 0,
+    overdueDates,
     profile: {
       full_name: fullName,
       email: user.email ?? "",
