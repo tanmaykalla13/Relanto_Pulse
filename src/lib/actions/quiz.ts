@@ -65,34 +65,41 @@ export async function getRandomGoalTopic(
 export async function generateInterviewQuestion(
   topic: string
 ): Promise<{ data: InterviewQuestion | null; error: string | null }> {
-  const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+  // 1. Check for the correct Environment Variable
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY;
   if (!apiKey?.trim()) {
     return {
       data: null,
-      error:
-        "Gemini API key not configured. Add GOOGLE_GENERATIVE_AI_API_KEY to .env.local",
+      error: "Gemini API key not configured.",
     };
   }
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    // Using 'gemini-1.5-flash' as it is the current standard stable model
+
+    // 2. Use the standard stable model
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
-      systemInstruction: `You are a Senior Technical Interviewer. Generate exactly one multiple-choice question as JSON. Output only valid JSON, no markdown or fences. Use: {"question":"...","options":["A","B","C","D"],"correctAnswerIndex":0,"explanation":"..."} where correctAnswerIndex is 0-3.`,
+      systemInstruction: `You are a Technical Team Lead mentoring an intern. 
+      Generate exactly one multiple-choice question as JSON. 
+      Target Level: Junior to Mid-level Developer.
+      Constraint: Keep the question scenario concise (max 3 sentences).
+      Output only valid JSON, no markdown or fences. 
+      Format: {"question":"...","options":["A","B","C","D"],"correctAnswerIndex":0,"explanation":"..."}`,
     });
 
-    const prompt = `Context: The candidate (intern) has worked on: "${topic}".
-Generate 1 challenging scenario-based multiple-choice question.
-- If technical: ask about architecture, edge cases, or best practices.
-- If non-technical: ask about soft skills, conflict resolution, or teamwork.
-Output JSON only.`;
+    // 3. The "Goldilocks" Prompt
+    const prompt = `Context: The intern worked on: "${topic}".
+    Generate 1 practical, scenario-based question.
+    - Difficulty: Challenging enough to test understanding, but not a complex Senior System Design problem.
+    - If Technical: Focus on common pitfalls, debugging, or standard patterns (e.g. "Why did this fail?" or "Which hook is better?").
+    - If Non-Technical: Focus on workplace professionalism or prioritization.
+    Output JSON only.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text()?.trim() ?? "";
 
-    // Clean up any potential markdown code blocks from the AI response
     const raw = text.replace(/^```json\s*/i, "").replace(/\s*```$/i, "").trim();
     const parsed = JSON.parse(raw);
 
