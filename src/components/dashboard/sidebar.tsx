@@ -20,7 +20,7 @@ const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/roadmap", label: "Roadmap", icon: Map },
   { href: "/dashboard/planner", label: "Planner", icon: Calendar },
-  { href: "/dashboard/ai-quiz", label: "AI Quiz", icon: BrainCircuit },
+  { href: "/quiz", label: "AI Quiz", icon: BrainCircuit },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ] as const;
 
