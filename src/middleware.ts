@@ -46,14 +46,13 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isDashboardRoute = pathname.startsWith("/dashboard");
-  const isQuizRoute = pathname === "/quiz";
   const isLoginRoute = pathname === "/login";
   const isAuthRoute = pathname.startsWith("/auth");
   const isSignupRoute = pathname === "/auth/signup";
 
   // Unauthenticated users trying to access protected routes
   // Note: /auth/signup remains public so new users can register
-  if (!user && (isDashboardRoute || isQuizRoute || (isAuthRoute && !isSignupRoute))) {
+  if (!user && (isDashboardRoute || (isAuthRoute && !isSignupRoute))) {
     const url = new URL("/login", request.url);
     return NextResponse.redirect(url);
   }
@@ -68,6 +67,6 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/quiz", "/login", "/auth/:path*"],
+  matcher: ["/dashboard/:path*", "/login", "/auth/:path*"],
 };
 

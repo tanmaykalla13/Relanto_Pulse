@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, Sparkles, Dice5 } from "lucide-react";
-import Link from "next/link";
+import { Loader2, Sparkles, Dice5, ArrowLeft } from "lucide-react";
 import {
   getRandomGoalTopic,
   generateInterviewQuestion,
@@ -14,7 +12,6 @@ import {
 type Mode = "targeted" | "surprise" | null;
 
 export default function QuizPage() {
-  const router = useRouter();
   const [mode, setMode] = useState<Mode>(null);
   const [topicInput, setTopicInput] = useState("");
   const [currentTopic, setCurrentTopic] = useState<string | null>(null);
@@ -28,6 +25,15 @@ export default function QuizPage() {
   const showToast = useCallback((msg: string) => {
     setError(msg);
     setTimeout(() => setError(null), 4000);
+  }, []);
+
+  const resetToTopics = useCallback(() => {
+    setMode(null);
+    setQuestion(null);
+    setCurrentTopic(null);
+    setSelectedIndex(null);
+    setShowExplanation(false);
+    setTopicInput("");
   }, []);
 
   const startTargeted = useCallback(async () => {
@@ -97,13 +103,9 @@ export default function QuizPage() {
       setSelectedIndex(null);
       setShowExplanation(false);
     } else {
-      setMode(null);
-      setQuestion(null);
-      setCurrentTopic(null);
-      setSelectedIndex(null);
-      setShowExplanation(false);
+      resetToTopics();
     }
-  }, [mode, currentTopic, showToast]);
+  }, [mode, currentTopic, showToast, resetToTopics]);
 
   const showQuiz =
     (question || loading) && mode !== null && currentTopic !== null;
@@ -111,16 +113,10 @@ export default function QuizPage() {
   return (
     <main className="min-h-screen px-6 py-10">
       <div className="mx-auto max-w-2xl">
-        <header className="mb-8 flex items-center justify-between">
+        <header className="mb-8">
           <h1 className="text-2xl font-semibold text-white">
             AI Mock Interviewer
           </h1>
-          <Link
-            href="/dashboard"
-            className="text-sm text-slate-400 hover:text-slate-200"
-          >
-            ← Dashboard
-          </Link>
         </header>
 
         {error && (
@@ -210,9 +206,19 @@ export default function QuizPage() {
               className="space-y-6"
             >
               <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2">
-                <span className="text-sm text-slate-300">
-                  Topic: <strong className="text-white">{currentTopic}</strong>
-                </span>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={resetToTopics}
+                    className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+                    aria-label="Back to topics"
+                  >
+                    <ArrowLeft className="h-5 w-5" />
+                  </button>
+                  <span className="text-sm text-slate-300">
+                    Topic: <strong className="text-white">{currentTopic}</strong>
+                  </span>
+                </div>
                 <span className="text-sm font-medium text-sky-400">
                   Score: {score}
                 </span>
