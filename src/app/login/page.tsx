@@ -33,7 +33,12 @@ export default function LoginPage() {
     setIsLoading(false);
 
     if (signInError) {
-      setError(signInError.message);
+      const msg = signInError.message.toLowerCase();
+      if (msg.includes("invalid") || msg.includes("not found") || msg.includes("no user")) {
+        setError("Account not found. Please sign up.");
+      } else {
+        setError(signInError.message);
+      }
       return;
     }
 

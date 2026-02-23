@@ -28,7 +28,12 @@ export default function SignupPage() {
 
     if (signUpError) {
       setIsLoading(false);
-      setError(signUpError.message);
+      const msg = signUpError.message.toLowerCase();
+      if (msg.includes("already") && (msg.includes("registered") || msg.includes("exists"))) {
+        setError("Account already created. Please log in.");
+      } else {
+        setError(signUpError.message);
+      }
       return;
     }
 
