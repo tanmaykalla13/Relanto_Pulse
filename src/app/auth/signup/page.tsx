@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Lock } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { GoogleSignInButton } from "@/components/GoogleSignInButton";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -122,6 +123,8 @@ export default function SignupPage() {
             {isLoading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
+
+        <GoogleSignInButton />
 
         <p className="mt-6 text-center text-xs text-slate-400">
           Already have an account?{" "}

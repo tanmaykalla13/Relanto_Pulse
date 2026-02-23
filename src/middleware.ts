@@ -49,10 +49,11 @@ export async function middleware(request: NextRequest) {
   const isLoginRoute = pathname === "/login";
   const isAuthRoute = pathname.startsWith("/auth");
   const isSignupRoute = pathname === "/auth/signup";
+  const isCallbackRoute = pathname === "/auth/callback";
 
   // Unauthenticated users trying to access protected routes
   // Note: /auth/signup remains public so new users can register
-  if (!user && (isDashboardRoute || (isAuthRoute && !isSignupRoute))) {
+  if (!user && (isDashboardRoute || (isAuthRoute && !isSignupRoute && !isCallbackRoute))) {
     const url = new URL("/login", request.url);
     return NextResponse.redirect(url);
   }
