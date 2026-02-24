@@ -66,8 +66,8 @@ export async function getDashboardStats(): Promise<DashboardStats | null> {
     .lt("target_date", todayStr)
     .neq("status", "completed");
 
-  const overdueDates = Array.from(
-    new Set((backlogRows ?? []).map((r) => r.target_date as string))
+  const overdueDates: string[] = Array.from(
+    new Set<string>((backlogRows ?? []).map((r: any) => r.target_date as string))
   ).sort();
 
   const { data: profileRow } = await supabase
