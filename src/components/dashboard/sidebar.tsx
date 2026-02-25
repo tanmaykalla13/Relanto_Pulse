@@ -7,7 +7,7 @@ import {
   Map,
   Calendar,
   BrainCircuit,
-  Settings,
+  User,
   Menu,
   X,
 } from "lucide-react";
@@ -21,7 +21,7 @@ const navItems = [
   { href: "/dashboard/roadmap", label: "Roadmap", icon: Map },
   { href: "/dashboard/planner", label: "Planner", icon: Calendar },
   { href: "/dashboard/quiz", label: "AI Quiz", icon: BrainCircuit },
-  { href: "/dashboard/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard/profile", label: "Profile", icon: User },
 ] as const;
 
 interface SidebarProps {

@@ -1,0 +1,5 @@
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS reporting_manager TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS github_profile TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS linkedin_profile TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS department TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS tech_stack TEXT;
