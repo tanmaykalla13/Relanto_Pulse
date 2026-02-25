@@ -10,6 +10,17 @@ export interface InternData {
     totalGoalsCompleted: number;
 }
 
+interface ProfileData {
+    id: string;
+    email: string;
+    full_name: string | null;
+}
+
+interface GoalData {
+    user_id: string;
+    status: string;
+}
+
 export async function getInternsWithGoalStats(): Promise<InternData[]> {
     const supabase = await createSupabaseServerClient();
 
@@ -26,8 +37,9 @@ export async function getInternsWithGoalStats(): Promise<InternData[]> {
         .select("id, email, full_name")
         .order("full_name", { ascending: true });
 
-    const interns = (allProfiles ?? []).filter(
-        (profile: any) => !adminEmails.has((profile.email ?? "").toLowerCase())
+    const profiles = (allProfiles as ProfileData[]) ?? [];
+    const interns = profiles.filter(
+        (profile) => !adminEmails.has((profile.email ?? "").toLowerCase())
     );
 
     const internIds = interns.map((intern) => intern.id);
@@ -47,12 +59,14 @@ export async function getInternsWithGoalStats(): Promise<InternData[]> {
         .select("user_id, status")
         .in("user_id", internIds);
 
+    const goals = (allGoals as GoalData[]) ?? [];
     const goalStats: Record<string, { set: number; completed: number }> = {};
+
     interns.forEach((intern) => {
         goalStats[intern.id] = { set: 0, completed: 0 };
     });
 
-    (allGoals ?? []).forEach((goal: any) => {
+    goals.forEach((goal) => {
         if (goalStats[goal.user_id]) {
             goalStats[goal.user_id].set += 1;
             if (goal.status === "completed") {
