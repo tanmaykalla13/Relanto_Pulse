@@ -60,6 +60,7 @@ export function ProfileForm({
 }: ProfileFormProps) {
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     async function handleSubmit(formData: FormData) {
         setError(null);
@@ -81,6 +82,7 @@ export function ProfileForm({
             setError(result.error);
         } else if (result.success) {
             setSuccess(true);
+            setIsEditing(false);
             setTimeout(() => setSuccess(false), 5000);
         }
     }
@@ -121,7 +123,12 @@ export function ProfileForm({
                         name="full_name"
                         type="text"
                         defaultValue={initialData.full_name ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white placeholder-slate-500 focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                         placeholder="John Doe"
                     />
                 </div>
@@ -137,7 +144,12 @@ export function ProfileForm({
                         name="manager"
                         type="text"
                         defaultValue={initialData.manager ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white placeholder-slate-500 focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                         placeholder="Manager Name"
                     />
                 </div>
@@ -151,7 +163,12 @@ export function ProfileForm({
                         name="github_url"
                         type="url"
                         defaultValue={initialData.github_url ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white placeholder-slate-500 focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                         placeholder="https://github.com/username"
                     />
                 </div>
@@ -167,7 +184,12 @@ export function ProfileForm({
                         name="linkedin_url"
                         type="url"
                         defaultValue={initialData.linkedin_url ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white placeholder-slate-500 focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white placeholder-slate-500 focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                         placeholder="https://linkedin.com/in/username"
                     />
                 </div>
@@ -180,7 +202,12 @@ export function ProfileForm({
                         id="department"
                         name="department"
                         defaultValue={initialData.department ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                     >
                         <option value="">Select a department</option>
                         {departments.map((dept) => (
@@ -201,7 +228,12 @@ export function ProfileForm({
                         id="role"
                         name="role"
                         defaultValue={initialData.role ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                     >
                         <option value="">Select a role</option>
                         {roles.map((role) => (
@@ -220,7 +252,12 @@ export function ProfileForm({
                         id="tech_stack"
                         name="tech_stack"
                         defaultValue={initialData.tech_stack ?? ""}
-                        className="mt-2 block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-white focus:border-sky-500 focus:outline-none focus:ring-sky-500/20 focus:ring-2"
+                        disabled={!isEditing}
+                        className={`mt-2 block w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-2 ${
+                            isEditing
+                                ? "border-slate-700 bg-slate-800 text-white focus:border-sky-500 focus:ring-sky-500/20"
+                                : "border-slate-700 bg-slate-800 text-slate-400 cursor-not-allowed"
+                        }`}
                     >
                         <option value="">Select a tech stack</option>
                         {techStacks.map((tech) => (
@@ -232,8 +269,27 @@ export function ProfileForm({
                 </div>
             </div>
 
-            <div className="pt-6">
-                <SubmitButton />
+            <div className="flex gap-3 pt-6">
+                {!isEditing ? (
+                    <button
+                        type="button"
+                        onClick={() => setIsEditing(true)}
+                        className="inline-flex items-center gap-2 rounded-lg bg-slate-700 px-6 py-3 font-medium text-white transition-colors hover:bg-slate-600"
+                    >
+                        Edit Profile
+                    </button>
+                ) : (
+                    <>
+                        <SubmitButton />
+                        <button
+                            type="button"
+                            onClick={() => setIsEditing(false)}
+                            className="inline-flex items-center gap-2 rounded-lg border border-slate-600 px-6 py-3 font-medium text-slate-200 transition-colors hover:bg-slate-800"
+                        >
+                            Cancel
+                        </button>
+                    </>
+                )}
             </div>
         </form>
     );
