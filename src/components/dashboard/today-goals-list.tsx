@@ -30,7 +30,7 @@ export function TodayGoalsList({ goals: initialGoals }: TodayGoalsListProps) {
 
   if (initialGoals.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-slate-700 bg-slate-900/50 px-6 py-10 text-center text-sm text-slate-400">
+      <p className="rounded-xl border border-dashed border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/50 px-6 py-10 text-center text-sm text-slate-600 dark:text-slate-400">
         No goals set for today. Go to Planner to add some.
       </p>
     );
@@ -43,32 +43,31 @@ export function TodayGoalsList({ goals: initialGoals }: TodayGoalsListProps) {
         return (
           <li
             key={goal.id}
-            className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-3"
+            className="flex items-center gap-3 rounded-xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 px-4 py-3"
           >
             <button
               type="button"
               onClick={() => handleToggle(goal.id, goal.status)}
               disabled={pendingId === goal.id}
-              className="flex shrink-0 items-center justify-center rounded-full transition-colors hover:bg-slate-700 disabled:opacity-50"
+              className="flex shrink-0 items-center justify-center rounded-full transition-colors hover:bg-gray-200 dark:hover:bg-slate-700 disabled:opacity-50"
               aria-label={
                 isCompleted ? "Mark as incomplete" : "Mark as complete"
               }
             >
               {isCompleted ? (
-                <Check className="h-5 w-5 text-emerald-400" />
+                <Check className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               ) : (
-                <Circle className="h-5 w-5 text-slate-500" />
+                <Circle className="h-5 w-5 text-slate-400 dark:text-slate-500" />
               )}
             </button>
             <span
-              className={`flex-1 text-sm ${
-                isCompleted ? "text-slate-500 line-through" : "text-slate-100"
-              }`}
+              className={`flex-1 text-sm ${isCompleted ? "text-slate-400 dark:text-slate-500 line-through" : "text-slate-900 dark:text-slate-100"
+                }`}
             >
               {goal.title}
             </span>
             {pendingId === goal.id && (
-              <Loader2 className="h-4 w-4 animate-spin text-slate-400" />
+              <Loader2 className="h-4 w-4 animate-spin text-slate-600 dark:text-slate-400" />
             )}
           </li>
         );

@@ -47,30 +47,28 @@ export default async function PlannerPage({
   if (!data) redirect("/login");
 
   return (
-    <main className="min-h-screen px-6 py-10">
+    <main className="min-h-screen px-6 py-10 bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-6 text-2xl font-semibold text-white">Planner</h1>
+        <h1 className="mb-6 text-2xl font-semibold text-slate-900 dark:text-white">Planner</h1>
 
         <div className="mb-8">
           <DateNav currentDate={dateStr} />
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2">
-          {/* Left: Goals */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+          <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 p-6">
             <PlannerGoals key={dateStr} dateStr={dateStr} goals={data.goals} />
           </div>
 
-          {/* Right: Journal & Files */}
           <div className="space-y-6">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+            <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 p-6">
               <JournalEditor
                 key={dateStr}
                 dateStr={dateStr}
                 initialContent={data.journal?.content ?? ""}
               />
             </div>
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+            <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 p-6">
               <FileUploadSection
                 key={dateStr}
                 dateStr={dateStr}

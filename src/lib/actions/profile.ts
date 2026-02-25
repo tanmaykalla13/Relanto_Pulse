@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export interface ProfileData {
@@ -42,6 +43,8 @@ export async function updateUserProfile(
   if (error) {
     return { error: error.message, success: false };
   }
+
+  revalidatePath("/dashboard/profile");
 
   return { error: null, success: true };
 }

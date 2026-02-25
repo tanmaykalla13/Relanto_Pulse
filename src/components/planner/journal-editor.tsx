@@ -82,19 +82,19 @@ export function JournalEditor({ dateStr, initialContent }: JournalEditorProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-200">Journal</h3>
+        <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Journal</h3>
         <button
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="flex items-center gap-1 rounded-lg bg-slate-700 px-2 py-1 text-xs font-medium text-slate-200 hover:bg-slate-600 disabled:opacity-50"
+          className="flex items-center gap-1 rounded-lg bg-gray-200 dark:bg-slate-700 px-2 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-gray-300 dark:hover:bg-slate-600 disabled:opacity-50"
         >
           {isSaving ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
           {isSaving ? "Saving..." : "Save"}
         </button>
       </div>
       <div
-        className="min-h-[8rem] rounded-xl border border-slate-700 bg-slate-900 px-4 py-3"
+        className="min-h-[8rem] rounded-xl border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3"
         onClick={(e) => {
           const target = e.target as HTMLElement;
           if (target.tagName !== "INPUT" && lines.length === 1 && lines[0] === "") {
@@ -105,7 +105,7 @@ export function JournalEditor({ dateStr, initialContent }: JournalEditorProps) {
         <ul className="list-none space-y-1">
           {lines.map((line, index) => (
             <li key={index} className="flex items-center gap-2">
-              <span className="text-slate-500 select-none" aria-hidden>
+              <span className="text-slate-400 dark:text-slate-500 select-none" aria-hidden>
                 •
               </span>
               <input
@@ -118,7 +118,7 @@ export function JournalEditor({ dateStr, initialContent }: JournalEditorProps) {
                 onKeyDown={handleKeyDown(index)}
                 onBlur={handleSave}
                 placeholder={index === 0 ? "Write a reflection..." : ""}
-                className="flex-1 min-w-0 bg-transparent py-0.5 text-sm text-slate-100 placeholder-slate-500 outline-none"
+                className="flex-1 min-w-0 bg-transparent py-0.5 text-sm text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-500 outline-none"
               />
             </li>
           ))}
