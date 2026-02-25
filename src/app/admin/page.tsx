@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isAdminEmail } from "@/lib/utils/admin";
 import { getInternsWithGoalStats } from "@/lib/actions/admin";
+import { SignOutButton } from "@/components/sign-out-button";
 
 export default async function AdminPage() {
     const supabase = await createSupabaseServerClient();
@@ -23,13 +24,16 @@ export default async function AdminPage() {
     return (
         <main className="min-h-screen px-6 py-10">
             <div className="mx-auto max-w-6xl">
-                <header className="mb-8">
-                    <h1 className="text-2xl font-semibold text-white">
-                        Admin Dashboard
-                    </h1>
-                    <p className="mt-1 text-sm text-slate-400">
-                        Manage and monitor intern progress
-                    </p>
+                <header className="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 className="text-2xl font-semibold text-white">
+                            Admin Dashboard
+                        </h1>
+                        <p className="mt-1 text-sm text-slate-400">
+                            Manage and monitor intern progress
+                        </p>
+                    </div>
+                    <SignOutButton />
                 </header>
 
                 <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6 overflow-x-auto">
