@@ -32,7 +32,7 @@ export default async function DashboardLayout({
   const role = profile?.role ?? "Intern";
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
       <Sidebar email={email} role={role} />
       <main className="lg:pl-64">
         <div className="min-h-screen pt-16 lg:pt-0">{children}</div>

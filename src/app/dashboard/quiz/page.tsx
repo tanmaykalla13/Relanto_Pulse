@@ -111,10 +111,10 @@ export default function QuizPage() {
     (question || loading) && mode !== null && currentTopic !== null;
 
   return (
-    <main className="min-h-screen px-6 py-10">
+    <main className="min-h-screen px-6 py-10 bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-2xl">
         <header className="mb-8">
-          <h1 className="text-2xl font-semibold text-white">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">
             AI Mock Interviewer
           </h1>
         </header>
@@ -124,7 +124,7 @@ export default function QuizPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="mb-6 rounded-xl bg-red-500/20 px-4 py-3 text-sm text-red-400"
+            className="mb-6 rounded-xl bg-red-100 dark:bg-red-500/20 px-4 py-3 text-sm text-red-600 dark:text-red-400"
           >
             {error}
           </motion.div>
@@ -141,12 +141,12 @@ export default function QuizPage() {
             >
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6"
+                className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 p-6"
               >
-                <h2 className="text-lg font-semibold text-slate-100">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Targeted Practice
                 </h2>
-                <p className="mt-2 text-sm text-slate-400">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   Enter a topic to practice (e.g., React Hooks)
                 </p>
                 <input
@@ -155,7 +155,7 @@ export default function QuizPage() {
                   onChange={(e) => setTopicInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && startTargeted()}
                   placeholder="e.g., React Hooks"
-                  className="mt-4 w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-sky-500"
+                  className="mt-4 w-full rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-sky-500"
                 />
                 <button
                   type="button"
@@ -174,12 +174,12 @@ export default function QuizPage() {
 
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6"
+                className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 p-6"
               >
-                <h2 className="text-lg font-semibold text-slate-100">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                   Review My Work
                 </h2>
-                <p className="mt-2 text-sm text-slate-400">
+                <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                   Test your knowledge on your completed tasks.
                 </p>
                 <button
@@ -205,36 +205,36 @@ export default function QuizPage() {
               exit={{ opacity: 0, x: -20 }}
               className="space-y-6"
             >
-              <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2">
+              <div className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 px-4 py-2">
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={resetToTopics}
-                    className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+                    className="rounded-lg p-1.5 text-slate-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                     aria-label="Back to topics"
                   >
                     <ArrowLeft className="h-5 w-5" />
                   </button>
-                  <span className="text-sm text-slate-300">
-                    Topic: <strong className="text-white">{currentTopic}</strong>
+                  <span className="text-sm text-slate-700 dark:text-slate-300">
+                    Topic: <strong className="text-slate-900 dark:text-white">{currentTopic}</strong>
                   </span>
                 </div>
-                <span className="text-sm font-medium text-sky-400">
+                <span className="text-sm font-medium text-sky-600 dark:text-sky-400">
                   Score: {score}
                 </span>
               </div>
 
               {loading ? (
-                <div className="flex min-h-[200px] items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/80">
-                  <Loader2 className="h-8 w-8 animate-spin text-sky-400" />
+                <div className="flex min-h-[200px] items-center justify-center rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80">
+                  <Loader2 className="h-8 w-8 animate-spin text-sky-500 dark:text-sky-400" />
                 </div>
               ) : question ? (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6"
+                  className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 p-6"
                 >
-                  <p className="text-lg font-medium text-slate-100">
+                  <p className="text-lg font-medium text-slate-900 dark:text-slate-100">
                     {question.question}
                   </p>
 
@@ -256,15 +256,14 @@ export default function QuizPage() {
                             type="button"
                             onClick={() => handleSelect(i)}
                             disabled={selectedIndex !== null}
-                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
-                              selectedIndex === null
-                                ? "border-slate-700 bg-slate-800/60 text-slate-100 hover:border-sky-500/50 hover:bg-slate-800"
+                            className={`w-full rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${selectedIndex === null
+                                ? "border-gray-300 dark:border-slate-700 bg-gray-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 hover:border-sky-400 dark:hover:border-sky-500/50 hover:bg-gray-100 dark:hover:bg-slate-800"
                                 : showResult && correct
-                                  ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-200"
+                                  ? "border-emerald-400 dark:border-emerald-500/50 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-200"
                                   : showResult && selected && !correct
-                                    ? "border-red-500/50 bg-red-500/20 text-red-200"
-                                    : "border-slate-700/50 bg-slate-900/50 text-slate-400"
-                            }`}
+                                    ? "border-red-400 dark:border-red-500/50 bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-200"
+                                    : "border-gray-300 dark:border-slate-700/50 bg-gray-100 dark:bg-slate-900/50 text-slate-600 dark:text-slate-400"
+                              }`}
                           >
                             {String.fromCharCode(65 + i)}. {opt}
                           </button>
@@ -279,12 +278,12 @@ export default function QuizPage() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0 }}
-                        className="mt-6 rounded-xl bg-slate-800/60 px-4 py-3"
+                        className="mt-6 rounded-xl bg-gray-100 dark:bg-slate-800/60 px-4 py-3"
                       >
-                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                           Explanation
                         </p>
-                        <p className="mt-2 text-sm text-slate-200">
+                        <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">
                           {question.explanation}
                         </p>
                       </motion.div>

@@ -27,11 +27,11 @@ export function DateNav({ currentDate }: DateNavProps) {
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-4 py-2">
+    <div className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 px-4 py-2">
       <button
         type="button"
         onClick={() => goTo(subDays(dt, 1))}
-        className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+        className="rounded-lg p-1.5 text-slate-600 hover:bg-gray-300 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
         aria-label="Previous day"
       >
         <ChevronLeft className="h-5 w-5" />
@@ -41,7 +41,7 @@ export function DateNav({ currentDate }: DateNavProps) {
         <PopoverTrigger asChild>
           <button
             type="button"
-            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-900 dark:text-white hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors"
           >
             <CalendarIcon className="h-4 w-4" />
             {format(dt, "EEE, MMM d, yyyy")}
@@ -53,7 +53,7 @@ export function DateNav({ currentDate }: DateNavProps) {
             selected={dt}
             onSelect={(date) => date && goTo(date)}
             defaultMonth={dt}
-            onMonthChange={() => {}}
+            onMonthChange={() => { }}
             className="rounded-xl border-0"
             disabled={(date) => {
               const start = new Date("2026-02-02");
@@ -67,7 +67,7 @@ export function DateNav({ currentDate }: DateNavProps) {
       <button
         type="button"
         onClick={() => goTo(addDays(dt, 1))}
-        className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+        className="rounded-lg p-1.5 text-slate-600 hover:bg-gray-300 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
         aria-label="Next day"
       >
         <ChevronRight className="h-5 w-5" />

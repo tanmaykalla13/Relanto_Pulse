@@ -53,15 +53,14 @@ export function WeekAccordion({ weeks: initialWeeks }: WeekAccordionProps) {
             className={cn(
               "overflow-hidden rounded-xl border",
               isVirtual
-                ? "border-indigo-500/30 bg-indigo-950/20"
-                : "border-emerald-500/30 bg-emerald-950/20"
+                ? "border-indigo-200 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-950/20"
+                : "border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-950/20"
             )}
           >
-            {/* Header */}
             <div
               className={cn(
                 "flex items-center gap-3 px-4 py-3",
-                isVirtual ? "bg-indigo-900/30" : "bg-emerald-900/30"
+                isVirtual ? "bg-indigo-100 dark:bg-indigo-900/30" : "bg-emerald-100 dark:bg-emerald-900/30"
               )}
             >
               <button
@@ -69,7 +68,7 @@ export function WeekAccordion({ weeks: initialWeeks }: WeekAccordionProps) {
                 onClick={() =>
                   setExpandedId(isExpanded ? null : week.id)
                 }
-                className="rounded p-1 text-slate-400 hover:text-white"
+                className="rounded p-1 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               >
                 {isExpanded ? (
                   <ChevronDown className="h-5 w-5" />
@@ -81,13 +80,15 @@ export function WeekAccordion({ weeks: initialWeeks }: WeekAccordionProps) {
               <span
                 className={cn(
                   "rounded-full px-2 py-0.5 text-xs font-medium",
-                  isVirtual ? "bg-indigo-500/30 text-indigo-200" : "bg-emerald-500/30 text-emerald-200"
+                  isVirtual
+                    ? "bg-indigo-200 dark:bg-indigo-500/30 text-indigo-700 dark:text-indigo-200"
+                    : "bg-emerald-200 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-200"
                 )}
               >
                 {week.phase}
               </span>
 
-              <span className="text-sm font-medium text-slate-300">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 Week {week.week_number}
               </span>
 
@@ -101,55 +102,54 @@ export function WeekAccordion({ weeks: initialWeeks }: WeekAccordionProps) {
                     if (e.key === "Enter") handleTitleBlur(week.id);
                     if (e.key === "Escape") setEditingId(null);
                   }}
-                  className="flex-1 rounded border border-slate-600 bg-slate-800 px-2 py-1 text-sm text-white outline-none focus:border-sky-500"
+                  className="flex-1 rounded border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-2 py-1 text-sm text-slate-900 dark:text-white outline-none focus:border-sky-500 dark:focus:border-sky-500"
                   autoFocus
                 />
               ) : (
                 <button
                   type="button"
                   onClick={() => startEdit(week)}
-                  className="flex-1 rounded px-2 py-1 text-left text-sm text-white hover:bg-slate-800/50"
+                  className="flex-1 rounded px-2 py-1 text-left text-sm text-slate-900 dark:text-white hover:bg-white/50 dark:hover:bg-slate-800/50"
                 >
                   {week.title}
                 </button>
               )}
             </div>
 
-            {/* Expanded content */}
             {isExpanded && (
-              <div className="border-t border-slate-800/50 p-4">
+              <div className="border-t border-gray-200 dark:border-slate-800/50 p-4">
                 <div className="grid gap-3 sm:grid-cols-5">
                   {week.days.map((day) => (
                     <div
                       key={day.date}
-                      className="rounded-lg border border-slate-800 bg-slate-900/60 p-3"
+                      className="rounded-lg border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3"
                     >
-                      <p className="text-xs font-medium text-slate-400">
+                      <p className="text-xs font-medium text-slate-700 dark:text-slate-400">
                         {day.dayName}
                       </p>
-                      <p className="text-[10px] text-slate-500">
+                      <p className="text-[10px] text-slate-600 dark:text-slate-500">
                         {day.date}
                       </p>
                       {day.goals.length === 0 ? (
-                        <p className="mt-2 text-xs text-slate-500">
+                        <p className="mt-2 text-xs text-slate-600 dark:text-slate-500">
                           No goals
                         </p>
                       ) : (
                         <div className="mt-2 space-y-1">
-                          <p className="text-xs text-emerald-400">
+                          <p className="text-xs text-emerald-600 dark:text-emerald-400">
                             {day.completedCount} / {day.goals.length} completed
                           </p>
                           <ul className="space-y-0.5">
                             {day.goals.slice(0, 3).map((g) => (
                               <li
                                 key={g.id}
-                                className="truncate text-xs text-slate-300"
+                                className="truncate text-xs text-slate-700 dark:text-slate-300"
                               >
                                 • {g.title}
                               </li>
                             ))}
                             {day.goals.length > 3 && (
-                              <li className="text-xs text-slate-500">
+                              <li className="text-xs text-slate-600 dark:text-slate-500">
                                 +{day.goals.length - 3} more
                               </li>
                             )}

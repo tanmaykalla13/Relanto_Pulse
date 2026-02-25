@@ -15,6 +15,7 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { SignOutButton } from "@/components/sign-out-button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -39,17 +40,15 @@ export function Sidebar({ email, role }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile menu button */}
       <button
         type="button"
         onClick={() => setIsOpen((o) => !o)}
-        className="fixed left-4 top-4 z-50 rounded-lg bg-slate-800 p-2 text-slate-300 lg:hidden"
+        className="fixed left-4 top-4 z-50 rounded-lg bg-gray-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300 p-2 lg:hidden"
         aria-label={isOpen ? "Close menu" : "Open menu"}
       >
         {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
-      {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 lg:hidden"
@@ -58,22 +57,22 @@ export function Sidebar({ email, role }: SidebarProps) {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-40 h-full w-64 border-r border-slate-800 bg-slate-900/95 transition-transform duration-200 lg:translate-x-0",
+          "fixed left-0 top-0 z-40 h-full w-64 border-r border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/95 transition-transform duration-200 lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-full flex-col">
-          <div className="flex h-16 items-center border-b border-slate-800 px-6 lg:pl-6">
+          <div className="flex h-16 items-center justify-between border-b border-gray-200 dark:border-slate-800 px-6 lg:pl-6">
             <Link
               href="/dashboard"
-              className="text-lg font-semibold text-white"
+              className="text-lg font-semibold text-slate-900 dark:text-white"
               onClick={() => setIsOpen(false)}
             >
               Relanto Pulse
             </Link>
+            {role !== "admin" && <ThemeToggle />}
           </div>
 
           <nav className="flex-1 space-y-0.5 px-4 py-4">
@@ -90,8 +89,8 @@ export function Sidebar({ email, role }: SidebarProps) {
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-sky-500/15 text-sky-300"
-                      : "text-slate-400 hover:bg-slate-800 hover:text-slate-100"
+                      ? "bg-sky-500/15 text-sky-600 dark:text-sky-300"
+                      : "text-slate-600 hover:bg-gray-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                   )}
                 >
                   <Icon className="h-5 w-5 shrink-0" />
@@ -101,17 +100,16 @@ export function Sidebar({ email, role }: SidebarProps) {
             })}
           </nav>
 
-          {/* User widget */}
-          <div className="border-t border-slate-800 p-4 space-y-2">
-            <div className="flex items-center gap-3 rounded-lg bg-slate-800/60 p-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-700 text-sm font-semibold text-slate-300">
+          <div className="border-t border-gray-200 dark:border-slate-800 p-4 space-y-2">
+            <div className="flex items-center gap-3 rounded-lg bg-gray-50 dark:bg-slate-800/60 p-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 dark:bg-slate-700 text-sm font-semibold text-slate-600 dark:text-slate-300">
                 {email.charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-100">
+                <p className="truncate text-sm font-medium text-slate-900 dark:text-slate-100">
                   {email}
                 </p>
-                <p className="truncate text-xs text-slate-400">{role}</p>
+                <p className="truncate text-xs text-slate-500 dark:text-slate-400">{role}</p>
               </div>
             </div>
             <div className="[&_button]:w-full [&_button]:rounded-lg [&_button]:py-1.5 [&_button]:text-xs">

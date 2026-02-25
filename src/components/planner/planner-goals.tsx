@@ -78,7 +78,7 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-200">Goals</h3>
+        <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-200">Goals</h3>
         <div className="flex gap-2">
           <input
             type="text"
@@ -86,13 +86,13 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
             onChange={(e) => setNewTitle(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleAdd()}
             placeholder="Add goal..."
-            className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm text-white placeholder-slate-500 outline-none focus:border-sky-500"
+            className="rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-sm text-slate-900 dark:text-white placeholder-slate-500 outline-none focus:border-sky-500 dark:focus:border-sky-500"
           />
           <button
             type="button"
             onClick={handleAdd}
             disabled={isAdding || !newTitle.trim()}
-            className="flex items-center gap-1 rounded-lg bg-sky-500 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-600 disabled:opacity-50"
+            className="flex items-center gap-1 rounded-lg bg-sky-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-sky-700 disabled:opacity-50"
           >
             {isAdding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
             Add
@@ -108,18 +108,18 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
           return (
             <li
               key={goal.id}
-              className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/80 px-3 py-2"
+              className="flex items-center gap-2 rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 px-3 py-2"
             >
               <button
                 type="button"
                 onClick={() => handleToggle(goal.id, goal.status)}
                 disabled={pendingId === goal.id}
-                className="shrink-0 rounded p-0.5 hover:bg-slate-700 disabled:opacity-50"
+                className="shrink-0 rounded p-0.5 hover:bg-gray-200 dark:hover:bg-slate-700 disabled:opacity-50"
               >
                 {isCompleted ? (
-                  <Check className="h-5 w-5 text-emerald-400" />
+                  <Check className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 ) : (
-                  <Circle className="h-5 w-5 text-slate-500" />
+                  <Circle className="h-5 w-5 text-slate-400 dark:text-slate-500" />
                 )}
               </button>
 
@@ -133,20 +133,20 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
                       if (e.key === "Enter") handleSaveEdit(goal.id);
                       if (e.key === "Escape") setEditingId(null);
                     }}
-                    className="flex-1 rounded border border-slate-600 bg-slate-800 px-2 py-1 text-sm text-white outline-none focus:border-sky-500"
+                    className="flex-1 rounded border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-2 py-1 text-sm text-slate-900 dark:text-white outline-none focus:border-sky-500 dark:focus:border-sky-500"
                     autoFocus
                   />
                   <button
                     type="button"
                     onClick={() => handleSaveEdit(goal.id)}
-                    className="rounded p-1 text-sky-400 hover:bg-slate-700"
+                    className="rounded p-1 text-sky-600 dark:text-sky-400 hover:bg-gray-200 dark:hover:bg-slate-700"
                   >
                     <Check className="h-4 w-4" />
                   </button>
                   <button
                     type="button"
                     onClick={() => setEditingId(null)}
-                    className="rounded p-1 text-slate-400 hover:bg-slate-700"
+                    className="rounded p-1 text-slate-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -154,16 +154,15 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
               ) : (
                 <>
                   <span
-                    className={`flex-1 text-sm ${
-                      isCompleted ? "text-slate-500 line-through" : "text-slate-100"
-                    }`}
+                    className={`flex-1 text-sm ${isCompleted ? "text-slate-400 dark:text-slate-500 line-through" : "text-slate-900 dark:text-slate-100"
+                      }`}
                   >
                     {goal.title}
                   </span>
                   <button
                     type="button"
                     onClick={() => startEdit(goal)}
-                    className="rounded p-1 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                    className="rounded p-1 text-slate-600 dark:text-slate-400 hover:bg-gray-200 dark:hover:bg-slate-700 dark:hover:text-slate-200"
                   >
                     <Pencil className="h-4 w-4" />
                   </button>
@@ -171,7 +170,7 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
                     type="button"
                     onClick={() => handleDelete(goal.id)}
                     disabled={pendingId === goal.id}
-                    className="rounded p-1 text-slate-400 hover:bg-red-500/20 hover:text-red-400 disabled:opacity-50"
+                    className="rounded p-1 text-slate-600 dark:text-slate-400 hover:bg-red-100 dark:hover:bg-red-500/20 hover:text-red-600 dark:hover:text-red-400 disabled:opacity-50"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -183,7 +182,7 @@ export function PlannerGoals({ dateStr, goals: initialGoals }: PlannerGoalsProps
       </ul>
 
       {initialGoals.length === 0 && (
-        <p className="rounded-xl border border-dashed border-slate-700 py-6 text-center text-sm text-slate-500">
+        <p className="rounded-xl border border-dashed border-gray-300 dark:border-slate-700 py-6 text-center text-sm text-slate-600 dark:text-slate-500">
           No goals for this date. Add one above.
         </p>
       )}

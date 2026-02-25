@@ -32,48 +32,44 @@ export default async function DashboardPage() {
   const currentDate = format(new Date(), "EEEE, MMM d, yyyy");
 
   return (
-    <main className="min-h-screen px-6 py-10">
+    <main className="min-h-screen px-6 py-10 bg-white dark:bg-slate-950">
       <div className="mx-auto max-w-5xl">
-        {/* Header */}
         <header className="mb-8">
-          <h1 className="text-2xl font-semibold text-white">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">
             Welcome back, {displayName} 👋
           </h1>
-          <p className="mt-1 text-sm text-slate-400">{currentDate}</p>
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{currentDate}</p>
         </header>
 
-        {/* Stats Grid */}
         <section className="mb-10 grid gap-6 md:grid-cols-2">
-          {/* Progress Card */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-            <h2 className="text-sm font-semibold text-slate-200">
+          <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 p-6">
+            <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200">
               Internship Progress
             </h2>
             <div className="mt-4">
-              <div className="h-3 w-full overflow-hidden rounded-full bg-slate-800">
+              <div className="h-3 w-full overflow-hidden rounded-full bg-gray-300 dark:bg-slate-800">
                 <div
                   className="h-full rounded-full bg-sky-500 transition-all duration-500"
                   style={{ width: `${stats.progressPercent}%` }}
                 />
               </div>
-              <p className="mt-3 text-sm text-slate-400">
+              <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
                 Day {stats.currentDay} of {stats.totalDays}
               </p>
             </div>
           </div>
 
-          {/* Backlog Card */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
-            <h2 className="text-sm font-semibold text-slate-200">
+          <div className="rounded-2xl border border-gray-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 p-6">
+            <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200">
               Action Required
             </h2>
             <div className="mt-4">
               {stats.overdueDates.length === 0 ? (
-                <div className="rounded-xl bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
+                <div className="rounded-xl bg-emerald-100 dark:bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">
                   You are all caught up! 🚀
                 </div>
               ) : (
-                <div className="rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-400">
+                <div className="rounded-xl bg-amber-100 dark:bg-amber-500/10 px-4 py-3 text-sm text-amber-700 dark:text-amber-400">
                   <span className="block mb-2">
                     You have pending goals on:
                   </span>
@@ -85,7 +81,7 @@ export default async function DashboardPage() {
                         <Link
                           key={dateStr}
                           href={`/dashboard/planner?date=${dateStr}`}
-                          className="inline-flex items-center rounded-lg bg-amber-500/20 px-3 py-1.5 text-xs font-medium text-amber-200 hover:bg-amber-500/30 hover:text-amber-100"
+                          className="inline-flex items-center rounded-lg bg-amber-200 dark:bg-amber-500/20 px-3 py-1.5 text-xs font-medium text-amber-800 dark:text-amber-200 hover:bg-amber-300 dark:hover:bg-amber-500/30 hover:text-amber-900 dark:hover:text-amber-100"
                         >
                           {label}
                         </Link>
@@ -98,9 +94,8 @@ export default async function DashboardPage() {
           </div>
         </section>
 
-        {/* Today's Focus */}
         <section>
-          <h2 className="mb-4 text-lg font-semibold text-white">
+          <h2 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
             Today&apos;s Focus
           </h2>
           <TodayGoalsList goals={todayGoals} />

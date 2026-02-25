@@ -32,13 +32,13 @@ export function SignOutButton() {
         type="button"
         onClick={handleSignOut}
         disabled={isPending}
-        className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-4 py-2 text-sm font-medium text-slate-50 shadow-sm transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex items-center gap-2 rounded-full bg-gray-200 dark:bg-slate-800 px-4 py-2 text-sm font-medium text-slate-900 dark:text-slate-50 shadow-sm transition hover:bg-gray-300 dark:hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <LogOut className="h-4 w-4" />
         {isPending ? "Signing out..." : "Sign out"}
       </button>
       {error ? (
-        <p className="text-xs text-red-400" role="status">
+        <p className="text-xs text-red-600 dark:text-red-400" role="status">
           {error}
         </p>
       ) : null}
