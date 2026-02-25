@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isAdminEmail } from "@/lib/utils/admin";
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
@@ -18,6 +19,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL(`/login?${search}`, request.url));
   }
 
-  return NextResponse.redirect(new URL("/dashboard", request.url));
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const email = user?.email || "";
+  const redirectPath = isAdminEmail(email) ? "/admin" : "/dashboard";
+
+  return NextResponse.redirect(new URL(redirectPath, request.url));
 }
 

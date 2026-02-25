@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Mail, Lock } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { GoogleSignInButton } from "@/components/GoogleSignInButton";
+import { getLoginRedirectPath } from "@/lib/actions/auth";
 
 function LoginPageInner() {
   const router = useRouter();
@@ -16,7 +17,7 @@ function LoginPageInner() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const next = searchParams.get("next") ?? "/dashboard";
+  const next = searchParams.get("next");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,7 +43,8 @@ function LoginPageInner() {
       return;
     }
 
-    router.push(next);
+    const redirectPath = next || (await getLoginRedirectPath());
+    router.push(redirectPath);
     router.refresh();
   }
 
