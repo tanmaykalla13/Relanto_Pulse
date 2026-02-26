@@ -147,9 +147,7 @@ npm install date-fns
    ```bash
    npx shadcn@latest init
    npx shadcn@latest add accordion calendar dialog textarea
-
 ```
-
 ---
 
 ## Phase 4: The AI Interview Simulator
@@ -163,6 +161,7 @@ npm install date-fns
 
 > Act as a Senior AI Engineer & Next.js Architect. Phase 4: The AI Interview Simulator.
 > Goal: Build src/app/quiz/page.tsx as an interactive "Mock Interview" engine with two distinct modes: "Custom Topic" and "Surprise Challenge".
+
 > 1. Server Actions (src/lib/actions/quiz.ts):
 > * getRandomGoalTopic(excludeTopic?: string): Logic: Query the goals table for status = 'completed'. Constraint: If excludeTopic is provided, filter it out (title != excludeTopic). Sort: Order by Random (Postgres: RANDOM()). Limit 1. Fallback: If no goals are found, return a default generic topic like "Software Engineering Professionalism" or "Agile Methodology".
 > * generateInterviewQuestion(topic): Input: A string (topic). API: Call Google Gemini (google-generative-ai). System Prompt: "You are a Senior Technical Interviewer. Context: The candidate (intern) has worked on: '${topic}'. Task: Generate 1 challenging, scenario-based multiple-choice question. Rules: If technical, ask about architecture/edge cases. If non-technical, ask about soft skills/conflict resolution. Output: JSON only. { question, options[], correctAnswerIndex, explanation }."
@@ -268,7 +267,6 @@ Click "Copy code" and paste this directly beneath your Phase 4 section to comple
    ADMIN_EMAILS=manager@relanto.com,admin@relanto.com
 
 ```
-
 ---
 
 ## Phase 8: Intern Profile Management
@@ -307,11 +305,7 @@ ADD COLUMN github_url TEXT,
 ADD COLUMN linkedin_url TEXT;
 
 ```
-
-
-
 ---
-
 ## Phase 9: Role-Based Theme Toggle
 
 **Objective:** Implement personalized workspace styling for interns while maintaining a strict, uniform view for administrators.
@@ -334,6 +328,102 @@ ADD COLUMN linkedin_url TEXT;
 1. **ThemeProvider Wrap:** Ensure your `src/app/layout.tsx` is successfully wrapped with the `ThemeProvider` component from `next-themes`, and that `attribute="class"` is set.
 
 ---
+```markdown
+
+## Phase 10: Dockerization
+
+**Objective:** Containerize the Next.js application to ensure consistent environments across local development and production workflows.
+
+### The Docker Prompt
+**Tool:** Cursor / GitHub Copilot
+**Target:** Root directory
+
+> Generate a production-ready Dockerfile and a docker-compose.yml file for my Next.js 15 application. Use node:18-alpine as the base image. The Dockerfile should install dependencies, build the application, and expose port 3000. The docker-compose file should map port 3000 and pass the .env.local file.
+> 
+> CRITICAL INSTRUCTION: You must strictly remove all comments from the generated code snippets. Do not include a single slash or block comment inside the Dockerfile or YAML code.
+
+### 🛠️ Manual Actions Required After Generation
+1. **Verify Dockerfile:** Ensure the generated `Dockerfile` in your root directory looks exactly like this:
+   ```dockerfile
+   FROM node:18-alpine
+   WORKDIR /app
+   COPY package*.json ./
+   RUN npm install
+   COPY . .
+   RUN npm run build
+   EXPOSE 3000
+   CMD ["npm", "start"]
+
+```
+
+2. **Verify Compose File:** Ensure the generated `docker-compose.yml` in your root directory looks exactly like this:
+```yaml
+version: '3.8'
+services:
+  relantopulse-web:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+
+```
+
+
+3. **Build and Run:** Execute `docker-compose up --build` in your terminal to verify the container spins up successfully on your local machine.
+
+---
+
+## Phase 11: CI/CD via GitHub Actions
+
+**Objective:** Automate the build testing process so every push or merge to the `main` branch is validated before it hits production.
+
+### 🛠️ Manual Actions Required
+
+1. **Create Workflow File:** In your project root, manually create the folder path `.github/workflows/` and add a file named `build.yml`.
+2. **Add Action Code:** Paste the following configuration to ensure your Next.js app compiles cleanly on GitHub's servers.
+
+```yaml
+name: Next.js Build Check
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+```
+
+3. **Add GitHub Secrets:** Go to your GitHub Repository on the web > **Settings** > **Secrets and variables** > **Actions**. Add your three API keys there so the GitHub Action has the credentials required to build the app.
+
+---
+
+## Phase 12: Production Deployment (Vercel)
+
+**Objective:** Deploy the `main` branch to Vercel for a live, globally accessible URL.
+
+### 🛠️ Manual Actions Required
+
+1. **Connect Repository:** Log in to your Vercel dashboard, click "Add New Project", and import your `relantopulse2` GitHub repository.
+2. **Configure Environment Variables:** Before clicking "Deploy", expand the "Environment Variables" section in Vercel. You MUST paste your `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `GEMINI_API_KEY`, and `ADMIN_EMAILS` here. Vercel cannot read your local `.env.local` file.
+3. **Deploy:** Click the Deploy button.
+4. **Update Supabase Site URL (CRITICAL):** Once Vercel provides your live URL (e.g., `https://relantopulse2.vercel.app`), go back to your Supabase Dashboard. Under **Authentication > URL Configuration**, update the **Site URL** and **Redirect URLs** to match your new Vercel domain. Without this step, your live login button will fail to redirect properly.
+
 
 ## 🛑 General Debugging Protocol
 
@@ -345,7 +435,3 @@ When building complex architectures like RelantoPulse with AI assistants, genera
 2. Copy the exact terminal error output or the Next.js overlay error.
 3. Paste the error directly back into Cursor or GitHub Copilot Chat alongside the affected file.
 4. **Prompt:** *"I received this error when running the code you provided. Fix the implementation to resolve this strict type/import issue."* 5. The AI will cross-reference its previous output and generate the corrected, functional patch.
-
-```
-
-```
