@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen flex items-center justify-center px-6 py-16 bg-slate-950">
       <div className="max-w-5xl mx-auto grid gap-12 md:grid-cols-2 items-center">
         <section className="space-y-6">
           <p className="text-sm font-semibold tracking-[0.2em] text-sky-400 uppercase">

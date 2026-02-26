@@ -49,7 +49,7 @@ function LoginPageInner() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-16">
+    <main className="min-h-screen flex items-center justify-center px-4 py-16 bg-slate-950">
       <div className="w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/40">
         <header className="mb-8 space-y-2 text-center">
           <p className="text-xs font-semibold tracking-[0.2em] text-sky-400 uppercase">

@@ -22,7 +22,7 @@ export default async function AdminPage() {
     const interns = await getInternsWithGoalStats();
 
     return (
-        <main className="min-h-screen px-6 py-10">
+        <main className="min-h-screen px-6 py-10 bg-slate-950">
             <div className="mx-auto max-w-6xl">
                 <header className="mb-8 flex items-start justify-between">
                     <div>
