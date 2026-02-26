@@ -1,83 +1,104 @@
 
-RelantoPulse 🚀
-RelantoPulse is a professional Micro-SaaS platform built to track and manage digital trainees during intensive training cycles. It bridges the gap between intern self-management and administrative oversight.
+# RelantoPulse 🚀
 
+**RelantoPulse** is a professional Micro-SaaS platform designed to track and manage the progress of digital trainees during intensive training cycles. It streamlines the transition from onboarding to project-readiness by bridging the gap between intern self-management and administrative oversight.
 
-🌟 Key Features
-For Interns
-Goal Setting & Milestone Tracking: Ability to set specific training goals to stay on track.
+## 🌟 Key Features
 
-Document & File Uploads: Upload relevant files, assignments, or certifications directly to specific goals or profile sections.
+### 🎓 For Interns
 
-Personalized Dashboard: A real-time view of training progress and upcoming tasks.
+* **Goal Setting & Milestones:** Define and track specific training objectives to ensure timely completion of the 15-day sprint.
+* **Evidence & File Uploads:** Securely upload assignments, certifications, and project documents directly to your profile.
+* **AI-Powered Assessments:** Test your knowledge using the integrated AI Quiz module powered by Gemini.
+* **Learning Roadmap & Planner:** Visualize your journey and schedule daily tasks to stay organized.
+* **Role-Based Theme Toggle:** A polished Dark/Light mode switch located in the sidebar for a personalized workspace.
 
-Learning Roadmap & AI Quiz: Interactive visual guides and AI-powered assessments to test knowledge.
+### 🛡️ For Admins
 
-Role-Based Theme Toggle: A polished Dark/Light mode switch located in the sidebar.
+* **Centralized Intern Roster:** A high-level, searchable view of every trainee in the system to monitor participation.
+* **Profile Oversight:** Direct access to intern details, tech stacks, and department assignments to ensure data accuracy across the cohort.
+* **Access Control:** A secured administrative environment that hides intern-specific tools to maintain a focused "Command Center" view.
 
-For Admins
-Centralized Intern Roster: A high-level, searchable view of every intern in the system.
+---
 
-Profile Oversight: Access to intern details, tech stacks, and department assignments to ensure data accuracy.
+## 🛠️ Tech Stack
 
-Access Control: Secured administrative environment restricted from intern-only features.
+| Layer | Technology |
+| --- | --- |
+| **Frontend** | **Next.js 15+** (App Router), **TypeScript** |
+| **Styling** | **Tailwind CSS v4**, **Lucide React** |
+| **Database & Auth** | **Supabase** (PostgreSQL) |
+| **AI Integration** | **Google Gemini AI** |
+| **State & Theme** | **Next-Themes** |
+| **Deployment** | **Vercel** |
 
+---
 
-🛠️ Tech Stack
-Layer,Technology
-Frontend,"Next.js 15+ (App Router), TypeScript"
-Styling,"Tailwind CSS v4, Lucide React (Icons)"
-Database/Auth,Supabase (Postgres & Auth)
-AI Integration,Gemini AI API (For Quiz/GenAI features)
-Deployment,Vercel
+## 🔑 Environment Setup
 
+To run RelantoPulse locally, create a `.env.local` file in the root directory and add the following keys:
 
-🔑 Setup & Environment Variables
-To run this project, you must create a .env.local file in the root directory and include the following keys:
-
+```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 GEMINI_API_KEY=your_google_gemini_api_key
 
-📡 How to get your Supabase Keys
-Log in to the Supabase Dashboard.
+```
 
-Select your project (or create a new one).
+### 🛰️ How to get your API Keys
 
-On the left sidebar, click the Settings (cog icon).
+#### 1. Supabase (Database & Auth)
 
-Navigate to API.
+1. Log in to the **[Supabase Dashboard](https://www.google.com/search?q=https://supabase.com/dashboard)**.
+2. Select your project and go to **Project Settings** > **API**.
+3. Copy the **Project URL** and the **`anon` public API Key**.
 
-Copy the Project URL and the anon public API Key.
+#### 2. Gemini AI (Assessments)
 
-🤖 How to get your Gemini API Key
-Go to the Google AI Studio.
+1. Visit **[Google AI Studio](https://aistudio.google.com/)**.
+2. Click on **"Get API key"** in the sidebar.
+3. Click **"Create API key in new project"** and copy the resulting string.
 
-Sign in with your Google account.
+---
 
-Click on "Get API key" in the top left sidebar.
+## 🚀 Installation & Development
 
-Click "Create API key in new project".
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/your-username/relantopulse2.git
+cd relantopulse2
 
-Copy your key and paste it as GEMINI_API_KEY in your .env.local.
+```
 
 
-🚀 Installation & Deployment
-Install dependencies:
-
-Bash
+2. **Install Dependencies:**
+```bash
 npm install
-Run the development server:
 
-Bash
+```
+
+
+3. **Run Development Server:**
+```bash
 npm run dev
-Vercel Deployment:
-When deploying to Vercel, ensure you add all three environment variables mentioned above in the Project Settings > Environment Variables section of the Vercel dashboard.
+
+```
 
 
-📁 Project Structure
-src/app: Routes, layouts, and page views.
+4. **Vercel Deployment:**
+When deploying, ensure all environment variables are added to the **Vercel Dashboard** under **Project Settings > Environment Variables**.
 
-src/components: UI components (Sidebar, ThemeToggle, FileUploaders).
+---
 
-src/lib: Supabase and Gemini client configurations.
+## 📁 Project Structure
+
+* `src/app`: Contains the main routes (dashboard, profile, admin, etc.) and layout logic.
+* `src/components`: Reusable UI components including the Theme Toggle and Sidebar.
+* `src/lib`: Configuration files for Supabase and Gemini AI clients.
+
+---
+
+## 🛡️ License
+
+Distributed under the MIT License.
+
