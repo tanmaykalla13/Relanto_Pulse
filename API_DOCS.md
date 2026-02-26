@@ -1,5 +1,9 @@
 # Relanto Pulse - API Reference
 
+**⚠️ Important: This application does NOT expose standard REST API endpoints (like `/api/goals`, `/api/users`). All backend operations are handled server-side via Next.js Server Actions, which are compiled away at build-time and cannot be called from external services. This is a self-contained application with no REST endpoints or external API access.**
+
+---
+
 ## Overview
 
 Relanto Pulse is an intern training platform built with Next.js Server Actions and Supabase. **This is NOT a REST API**—all communication occurs server-side via Next.js Server Actions (not publicly accessible). The application is self-contained with no external API integrations.
