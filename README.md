@@ -1,13 +1,13 @@
 
 # RelantoPulse 🚀
 
-**RelantoPulse** is a professional Micro-SaaS platform designed to track and manage the progress of digital trainees during intensive training cycles. It streamlines the transition from onboarding to project-readiness by bridging the gap between intern self-management and administrative oversight.
+**RelantoPulse** is a professional Micro-SaaS platform designed to track and manage the progress of interns during intensive training cycles at Relanto. It streamlines the transition from onboarding to project-readiness by bridging the gap between intern self-management and administrative oversight.
 
 ## 🌟 Key Features
 
 ### 🎓 For Interns
 
-* **Goal Setting & Milestones:** Define and track specific training objectives to ensure timely completion of the 15-day sprint.
+* **Goal Setting & Milestones:** Define and track specific training objectives to ensure timely completion of the 5 month internship.
 * **Evidence & File Uploads:** Securely upload assignments, certifications, and project documents directly to your profile.
 * **AI-Powered Assessments:** Test your knowledge using the integrated AI Quiz module powered by Gemini.
 * **Learning Roadmap & Planner:** Visualize your journey and schedule daily tasks to stay organized.
