@@ -1,20 +1,24 @@
 
+
+```markdown
 # RelantoPulse 🚀
 
 **RelantoPulse** is a professional Micro-SaaS platform designed to track and manage the progress of interns during intensive training cycles at Relanto. It streamlines the transition from onboarding to project-readiness by bridging the gap between intern self-management and administrative oversight.
 
+> **📖 Documentation:** For detailed setup and API reference, see the `documentation/` folder:
+> - `build_guide.md` - Build and configuration guide
+> - `API_DOCS.md` - API reference documentation
+
 ## 🌟 Key Features
 
 ### 🎓 For Interns
-
-* **Goal Setting & Milestones:** Define and track specific training objectives to ensure timely completion of the 5 month internship.
+* **Goal Setting & Milestones:** Define and track specific training objectives to ensure timely completion of the 5-month internship.
 * **Evidence & File Uploads:** Securely upload assignments, certifications, and project documents directly to your profile.
 * **AI-Powered Assessments:** Test your knowledge using the integrated AI Quiz module powered by Gemini.
 * **Learning Roadmap & Planner:** Visualize your journey and schedule daily tasks to stay organized.
 * **Role-Based Theme Toggle:** A polished Dark/Light mode switch located in the sidebar for a personalized workspace.
 
 ### 🛡️ For Admins
-
 * **Centralized Intern Roster:** A high-level, searchable view of every trainee in the system to monitor participation.
 * **Profile Oversight:** Direct access to intern details, tech stacks, and department assignments to ensure data accuracy across the cohort.
 * **Access Control:** A secured administrative environment that hides intern-specific tools to maintain a focused "Command Center" view.
@@ -30,7 +34,7 @@
 | **Database & Auth** | **Supabase** (PostgreSQL) |
 | **AI Integration** | **Google Gemini AI** |
 | **State & Theme** | **Next-Themes** |
-| **Deployment** | **Vercel** |
+| **Deployment & Ops** | **Vercel**, **Docker**, **GitHub Actions** |
 
 ---
 
@@ -42,6 +46,7 @@ To run RelantoPulse locally, create a `.env.local` file in the root directory an
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 GEMINI_API_KEY=your_google_gemini_api_key
+ADMIN_EMAILS=manager@relanto.com,admin@relanto.com
 
 ```
 
@@ -63,35 +68,57 @@ GEMINI_API_KEY=your_google_gemini_api_key
 
 ## 🚀 Installation & Development
 
+### Standard Local Environment
+
 1. **Clone the Repository:**
+
 ```bash
-git clone https://github.com/your-username/relantopulse2.git
+git clone [https://github.com/your-username/relantopulse2.git](https://github.com/your-username/relantopulse2.git)
 cd relantopulse2
 
 ```
 
-
 2. **Install Dependencies:**
+
 ```bash
 npm install
 
 ```
 
-
 3. **Run Development Server:**
+
 ```bash
 npm run dev
 
 ```
 
+### Docker Environment
 
-4. **Vercel Deployment:**
+To run the containerized production build locally:
+
+```bash
+docker-compose up --build
+
+```
+
+### Vercel Deployment
+
 When deploying, ensure all environment variables are added to the **Vercel Dashboard** under **Project Settings > Environment Variables**.
+
+---
+
+## 📚 Project Documentation
+
+For deeper insights into the architecture and API structure, refer to the included documentation:
+
+* **[Build Guide](https://www.google.com/search?q=./build_guide.md):** Step-by-step AI generation prompts and manual configuration steps.
+* **[API Docs](https://www.google.com/search?q=./API_DOCS.md):** High-level reference sheet for Next.js Server Actions and Route Handlers.
 
 ---
 
 ## 📁 Project Structure
 
+```text
 relantopulse2/
 ├── .github/
 │   └── workflows/
@@ -130,8 +157,10 @@ relantopulse2/
 ├── .dockerignore
 ├── .env.local
 ├── .gitignore
+├── API_DOCS.md
 ├── build_guide.md
 ├── Dockerfile
+├── docker-compose.yml
 ├── eslint.config.mjs
 ├── next-env.d.ts
 ├── next.config.mjs
@@ -140,9 +169,16 @@ relantopulse2/
 ├── postcss.config.mjs
 ├── README.md
 └── tsconfig.json
+
+```
+
 ---
 
 ## 🛡️ License
 
 Distributed under the MIT License.
 
+```
+
+
+```
