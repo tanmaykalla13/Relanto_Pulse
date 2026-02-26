@@ -92,10 +92,54 @@ When deploying, ensure all environment variables are added to the **Vercel Dashb
 
 ## 📁 Project Structure
 
-* `src/app`: Contains the main routes (dashboard, profile, admin, etc.) and layout logic.
-* `src/components`: Reusable UI components including the Theme Toggle and Sidebar.
-* `src/lib`: Configuration files for Supabase and Gemini AI clients.
-
+relantopulse2/
+├── .github/
+│   └── workflows/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── admin/
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   ├── login/
+│   │   ├── quiz/
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── dashboard/
+│   │   ├── planner/
+│   │   ├── profile/
+│   │   ├── roadmap/
+│   │   ├── ui/
+│   │   ├── GoogleSignInButton.tsx
+│   │   ├── sign-out-button.tsx
+│   │   ├── theme-provider.tsx
+│   │   └── theme-toggle.tsx
+│   ├── lib/
+│   │   ├── actions/
+│   │   ├── supabase/
+│   │   ├── utils/
+│   │   └── utils.ts
+│   ├── types/
+│   │   └── supabase-ssr.d.ts
+│   └── middleware.ts
+├── supabase/
+│   └── migrations/
+├── .dockerignore
+├── .env.local
+├── .gitignore
+├── build_guide.md
+├── Dockerfile
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── README.md
+└── tsconfig.json
 ---
 
 ## 🛡️ License
